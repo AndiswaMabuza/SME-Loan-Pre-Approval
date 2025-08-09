@@ -12,29 +12,6 @@ from plotly.subplots import make_subplots
 
 # Suppress warnings for cleaner output in Streamlit
 warnings.filterwarnings('ignore')
-
-@st.cache_resource
-def install_dependencies():
-    try:
-        # Attempt to import a key library to check if dependencies are met
-        import sklearn
-        import imblearn
-        import xgboost
-        import plotly
-        st.success("Dependencies already met.")
-    except ImportError:
-        st.warning("Installing missing dependencies. This may take a moment...")
-        try:
-            subprocess.check_call([sys.executable, "-m", "pip", "install", "scikit-learn==1.2.2", "imbalanced-learn==0.10.1", "xgboost", "plotly", "pandas", "joblib"])
-            st.success("Dependencies installed successfully!")
-        except Exception as e:
-            st.error(f"Failed to install dependencies: {e}. Please ensure you have pip installed and an active internet connection.")
-            st.stop() # Stop the app if dependencies can't be installed
-
-# Run dependency installation only once
-install_dependencies()
-
-# --- Model Asset Loading (Requires notebook to be run first) ---
 @st.cache_resource
 def load_model_assets():
     """Loads the pre-trained model pipeline and LabelEncoder."""
